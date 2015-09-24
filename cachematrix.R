@@ -53,19 +53,24 @@ cacheSolve <- function(x, ...) {
 }
 
 
+
+
 ##################################################################################
-##  For testing purposes only, validating that the code works.  The object a is ##
-##  a matrix, which is inverted (or 'solved') directly and then assigned to     ##
-##  object b.  The object c is the result of the two functions defined above.   ##
-##  Objects b and c are identical, and produce the identity matrix when         ##
-##  multpliplied by object a.                                                   ##
+##  For testing purposes only, validating that the code works.  The object mat  ##
+##  is a matrix.  The object a is the list of functions associated with setting ##
+##  and retrieving the inverse of that matrix.  When cacheSolve is run on a,    ## 
+##  the inverse of the original matrix is calculated, cached, and returned.     ##
+##  When cacheSolve is run on a again, the cached value of the matrix inverse   ##
+##  is returned instead of recalculating that inverse.  Finally, the output of  ##
+##  cacheSolve is multiplied by the initial matrix to produce the identity      ##
+##  matrix, verifying that the inverse is correct.                              ##
 ##################################################################################
 
-# a<-matrix(1:4, nrow=2, ncol=2) # Initial matrix
-# b<-solve(matrix(1:4, nrow=2, ncol=2)) # 'Direct' calculation
+mat<-matrix(1:4, nrow=2, ncol=2) # Initial matrix
 
-# c<-cacheSolve(makeCacheMatrix(matrix(1:4, nrow=2, ncol=2))) # 'Cached' calculation
+a<-makeCacheMatrix(mat) # List of functions to calculate, store, and retrieve matrix inverse.
 
-# identical(b, c) # The 'direct' and 'cached' results are the same.
+cacheSolve(a) # Calculates matrix inverse.
+cacheSolve(a) # Retrieves cached matrix inverse.
 
-# a %*% b # Results
+cacheSolve(a) %*% mat # Verifies inverse.
